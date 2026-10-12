@@ -1,0 +1,33 @@
+{
+  "total_rows": 251277,
+  "total_columns": 19,
+  "unique_videos": 78847,
+  "unique_channels": 4803,
+  "median_views": 947434.0,
+  "min_trending_date": "2020-08-12T00:00:00+00:00",
+  "max_trending_date": "2024-04-15T00:00:00+00:00",
+  "min_published_date": "2020-07-23T11:30:37+00:00",
+  "max_published_date": "2024-04-15T05:47:57+00:00",
+  "missing_values": {
+    "video_id": 0,
+    "title": 0,
+    "publishedAt": 0,
+    "channelId": 0,
+    "channelTitle": 1,
+    "categoryId": 0,
+    "trending_date": 0,
+    "tags": 0,
+    "view_count": 0,
+    "likes": 0,
+    "dislikes": 0,
+    "comment_count": 0,
+    "thumbnail_link": 0,
+    "comments_disabled": 0,
+    "ratings_disabled": 0,
+    "description": 19455
+  },
+  "comments_disabled_count": 1697,
+  "comments_disabled_pct": 0.6753503106133868,
+  "ratings_disabled_count": 2290,
+  "ratings_disabled_pct": 0.9113448505036275
+}

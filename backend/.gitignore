@@ -1,0 +1,9 @@
+# Data files (do not commit raw CSV or large artifacts)
+data/raw/*.csv
+*.csv
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+venv/
+.venv/

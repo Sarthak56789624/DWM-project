@@ -1,0 +1,15 @@
+services:
+  yt-trending-india-api:
+    build: .
+    container_name: yt-trending-india-api
+    ports:
+      - "8000:8000"
+    environment:
+      - RAW_DATA_PATH=data/raw/IN_youtube_trending_data.csv
+      - PROCESSED_DATA_PATH=data/processed/trending.parquet
+      - MODELS_DIR=models
+      - CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+    volumes:
+      - ./data/processed:/app/data/processed
+      - ./models:/app/models
+    restart: unless-stopped
