@@ -140,6 +140,43 @@ class ClassificationMetricsResponse(BaseModel):
     decision_tree: Dict[str, Any]
     naive_bayes: Dict[str, Any]
 
+class ClassificationURLRequest(BaseModel):
+    url: str = Field(..., description="YouTube video URL or Video ID")
+    model: str = Field(default="decision_tree", pattern="^(decision_tree|naive_bayes)$")
+    categoryId: Optional[int] = Field(default=None, ge=1, le=100)
+
+class ChannelAnalyticsResponse(BaseModel):
+    channel_title: str
+    matched_channel: Optional[str] = None
+    is_tracked: bool
+    appearances: int
+    unique_videos: int
+    avg_views: float
+    median_views: float
+    avg_likes: float
+    avg_comments: float
+    avg_engagement_rate: float
+    popularity_rate: float
+    channel_tier: str
+    tier_badge: str
+    tier_color: str
+    authority_score: float
+    rank_appearances: Optional[int] = None
+    rank_avg_views: Optional[int] = None
+    dominant_category_id: int
+    dominant_category_name: str
+    video_views_ratio: float
+    video_engagement_ratio: float
+    video_engagement_rate: float
+    channel_verdict: str
+    category_benchmark: Dict[str, Any]
+
+class ClassificationURLResponse(BaseModel):
+    metadata: Dict[str, Any]
+    channel_analytics: ChannelAnalyticsResponse
+    classification: Dict[str, Any]
+    benchmark_comparison: Dict[str, Any]
+
 # ----------------- Clustering -----------------
 class ClusteringAssignRequest(BaseModel):
     view_count: int = Field(ge=0, description="View count")

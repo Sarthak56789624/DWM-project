@@ -205,6 +205,93 @@ export interface ClassificationPredictResponse {
   };
 }
 
+export interface ChannelAnalytics {
+  channel_title: string;
+  matched_channel: string | null;
+  is_tracked: boolean;
+  appearances: number;
+  unique_videos: number;
+  avg_views: number;
+  median_views: number;
+  avg_likes: number;
+  avg_comments: number;
+  avg_engagement_rate: number;
+  popularity_rate: number;
+  channel_tier: string;
+  tier_badge: string;
+  tier_color: string;
+  authority_score: number;
+  rank_appearances?: number | null;
+  rank_avg_views?: number | null;
+  dominant_category_id: number;
+  dominant_category_name: string;
+  video_views_ratio: number;
+  video_engagement_ratio: number;
+  video_engagement_rate: number;
+  channel_verdict: string;
+  category_benchmark: {
+    categoryId: number;
+    category_name: string;
+    total_videos: number;
+    avg_views: number;
+    median_views: number;
+    avg_likes: number;
+    avg_comments: number;
+    avg_engagement_rate: number;
+    popularity_rate: number;
+  };
+}
+
+export interface ClassificationUrlRequest {
+  url: string;
+  model?: 'decision_tree' | 'naive_bayes';
+  categoryId?: number;
+}
+
+export interface ClassificationUrlResponse {
+  metadata: {
+    video_id: string;
+    title: string;
+    channelTitle: string;
+    view_count: number;
+    likes: number;
+    dislikes: number;
+    comment_count: number;
+    categoryId: number;
+    categoryName: string;
+    thumbnail_url: string;
+    engagement_rate: number;
+  };
+  channel_analytics: ChannelAnalytics;
+  classification: {
+    model: string;
+    predicted_class: 'Popular' | 'Not Popular';
+    probabilities: Record<string, number>;
+    inputs: {
+      likes: number;
+      dislikes: number;
+      comment_count: number;
+      categoryId: number;
+    };
+    decision_tree: {
+      predicted_class: 'Popular' | 'Not Popular';
+      probabilities: Record<string, number>;
+    };
+    naive_bayes: {
+      predicted_class: 'Popular' | 'Not Popular';
+      probabilities: Record<string, number>;
+    };
+    analytical_verdict: string;
+  };
+  benchmark_comparison: {
+    median_threshold: number;
+    actual_views: number;
+    exceeds_threshold: boolean;
+    percentile_rank: number;
+    virality_grade: string;
+  };
+}
+
 export interface ClusterProfile {
   size: number;
   percentage: number;

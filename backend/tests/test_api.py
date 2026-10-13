@@ -149,6 +149,18 @@ def test_classification_endpoints(client):
     p2 = r_p2.json()
     assert p2["predicted_class"] in ["Popular", "Not Popular"]
 
+    # Predict via URL with channel analytics
+    r_url = client.post("/api/v1/classification/predict-url", json={"url": "https://www.youtube.com/watch?v=v7K4vGYL9ow", "model": "decision_tree"})
+    assert r_url.status_code == 200
+    res_url = r_url.json()
+    assert "metadata" in res_url
+    assert "channel_analytics" in res_url
+    assert "classification" in res_url
+    assert res_url["classification"]["predicted_class"] in ["Popular", "Not Popular"]
+    assert "analytical_verdict" in res_url["classification"]
+    assert res_url["channel_analytics"]["is_tracked"] is True
+    assert res_url["channel_analytics"]["channel_title"] == "YRF"
+
 def test_clustering_endpoints(client):
     r_sum = client.get("/api/v1/clustering/summary")
     assert r_sum.status_code == 200

@@ -181,6 +181,15 @@ export async function predictClassification(params: {
   });
 }
 
+export async function predictClassificationByUrl(
+  params: import('../types/api').ClassificationUrlRequest
+): Promise<import('../types/api').ClassificationUrlResponse> {
+  return fetchJson<import('../types/api').ClassificationUrlResponse>('/classification/predict-url', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 export function useClusteringSummary() {
   return useQuery<ClusteringSummaryResponse>({
     queryKey: ['clusteringSummary'],
