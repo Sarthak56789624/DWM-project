@@ -122,6 +122,7 @@ class RegressionMetricsResponse(BaseModel):
     simple: Dict[str, Any]
     multiple: Dict[str, Any]
 
+
 # ----------------- Classification -----------------
 class ClassificationPredictRequest(BaseModel):
     likes: int = Field(ge=0, description="Likes count")
@@ -176,6 +177,21 @@ class ClassificationURLResponse(BaseModel):
     channel_analytics: ChannelAnalyticsResponse
     classification: Dict[str, Any]
     benchmark_comparison: Dict[str, Any]
+
+class RegressionURLRequest(BaseModel):
+    url: str = Field(..., description="YouTube video URL or Video ID")
+    model: str = Field(default="multiple", pattern="^(simple|multiple)$")
+    categoryId: Optional[int] = Field(default=None, ge=1, le=100)
+
+class RegressionURLResponse(BaseModel):
+    metadata: Dict[str, Any]
+    channel_analytics: ChannelAnalyticsResponse
+    prediction: Dict[str, Any]
+    simple_prediction: Dict[str, Any]
+    multiple_prediction: Dict[str, Any]
+    benchmark_comparison: Dict[str, Any]
+    regression_verdict: str
+    temporal_projections: Optional[Dict[str, Any]] = None
 
 # ----------------- Clustering -----------------
 class ClusteringAssignRequest(BaseModel):

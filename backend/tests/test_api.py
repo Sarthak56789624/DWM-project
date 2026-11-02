@@ -127,6 +127,14 @@ def test_regression_endpoints(client):
     p2 = r_p2.json()
     assert p2["predicted_views"] > 0
 
+    # Predict by URL
+    r_url = client.post("/api/v1/regression/predict-url", json={"url": "https://www.youtube.com/watch?v=v7K4vGYL9ow", "model": "multiple"})
+    assert r_url.status_code == 200
+    p_url = r_url.json()
+    assert "channel_analytics" in p_url
+    assert "regression_verdict" in p_url
+    assert p_url["benchmark_comparison"]["predicted_views"] > 0
+
 def test_classification_endpoints(client):
     r_m = client.get("/api/v1/classification/metrics")
     assert r_m.status_code == 200
@@ -225,6 +233,17 @@ def test_creator_simulator_endpoints(client):
     assert timing["categoryId"] == 24
     assert "best_day" in timing
     assert len(timing["heatmap_grid"]) > 0
+
+    # Test automate virality simulation by URL
+    r_url = client.post("/api/v1/creator/simulate-url", json={
+        "url": "https://www.youtube.com/watch?v=v7K4vGYL9ow"
+    })
+    assert r_url.status_code == 200
+    sim_url = r_url.json()
+    assert "metadata" in sim_url
+    assert "is_viral" in sim_url
+    assert "virality_verdict" in sim_url
+    assert sim_url["virality_index"] >= 70
 
 def test_live_youtube_endpoints(client):
     r_samples = client.get("/api/v1/youtube/samples")

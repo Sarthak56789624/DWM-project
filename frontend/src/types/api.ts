@@ -292,6 +292,83 @@ export interface ClassificationUrlResponse {
   };
 }
 
+export interface RegressionUrlRequest {
+  url: string;
+  model?: 'simple' | 'multiple';
+  categoryId?: number;
+}
+
+export interface RegressionUrlResponse {
+  metadata: {
+    video_id: string;
+    title: string;
+    channelTitle: string;
+    view_count: number;
+    likes: number;
+    dislikes: number;
+    comment_count: number;
+    categoryId: number;
+    categoryName: string;
+    thumbnail_url: string;
+    engagement_rate: number;
+  };
+  channel_analytics: ChannelAnalytics;
+  prediction: RegressionPredictResponse;
+  simple_prediction: RegressionPredictResponse;
+  multiple_prediction: RegressionPredictResponse;
+  benchmark_comparison: {
+    actual_views: number;
+    predicted_views: number;
+    residual: number;
+    ratio_actual_to_predicted: number;
+    performance_status: 'viral' | 'lagging' | 'normal';
+    likes: number;
+    dislikes: number;
+    comment_count: number;
+    simple_predicted_views: number;
+    multiple_predicted_views: number;
+    simple_residual: number;
+    multiple_residual: number;
+  };
+  regression_verdict: string;
+  temporal_projections?: {
+    base_views: number;
+    velocity_factor: number;
+    projections: {
+      '7_days': {
+        days: number;
+        label: string;
+        projected_views: number;
+        multiplier: number;
+      };
+      '30_days': {
+        days: number;
+        label: string;
+        projected_views: number;
+        multiplier: number;
+      };
+      '90_days': {
+        days: number;
+        label: string;
+        projected_views: number;
+        multiplier: number;
+      };
+      '365_days': {
+        days: number;
+        label: string;
+        projected_views: number;
+        multiplier: number;
+      };
+    };
+    curve: Array<{
+      day: number;
+      projected_views: number;
+      lower_bound: number;
+      upper_bound: number;
+    }>;
+  };
+}
+
 export interface ClusterProfile {
   size: number;
   percentage: number;
@@ -391,7 +468,29 @@ export interface CreatorSimulateRequest {
   planned_tags?: string;
 }
 
+export interface CreatorSimulateUrlRequest {
+  url: string;
+  planned_day?: string;
+  planned_hour_ist?: number;
+  planned_tags?: string;
+}
+
 export interface CreatorSimulateResponse {
+  metadata?: {
+    video_id: string;
+    title: string;
+    channelTitle: string;
+    view_count: number;
+    likes: number;
+    dislikes: number;
+    comment_count: number;
+    categoryId: number;
+    categoryName: string;
+    thumbnail_url: string;
+    engagement_rate: number;
+  };
+  is_viral?: boolean;
+  virality_verdict?: string;
   virality_index: number;
   tier: string;
   tier_color: string;

@@ -160,6 +160,15 @@ export async function predictRegression(params: {
   });
 }
 
+export async function predictRegressionByUrl(
+  params: import('../types/api').RegressionUrlRequest
+): Promise<import('../types/api').RegressionUrlResponse> {
+  return fetchJson<import('../types/api').RegressionUrlResponse>('/regression/predict-url', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
 export function useClassificationMetrics() {
   return useQuery<ClassificationMetricsResponse>({
     queryKey: ['classificationMetrics'],
@@ -258,6 +267,15 @@ export async function simulateCreatorVideo(
   params: import('../types/api').CreatorSimulateRequest
 ): Promise<import('../types/api').CreatorSimulateResponse> {
   return fetchJson<import('../types/api').CreatorSimulateResponse>('/creator/simulate', {
+    method: 'POST',
+    body: JSON.stringify(params),
+  });
+}
+
+export async function simulateCreatorVideoByUrl(
+  params: import('../types/api').CreatorSimulateUrlRequest
+): Promise<import('../types/api').CreatorSimulateResponse> {
+  return fetchJson<import('../types/api').CreatorSimulateResponse>('/creator/simulate-url', {
     method: 'POST',
     body: JSON.stringify(params),
   });
